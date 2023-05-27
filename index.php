@@ -46,6 +46,7 @@ include_once 'Views/Layouts/header.php';
     <!-- /.card -->
 
 </section>
+<script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
 <?php
 include_once 'Views/Layouts/footer.php';
 ?>
