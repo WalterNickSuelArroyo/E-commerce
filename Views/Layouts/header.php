@@ -141,6 +141,11 @@
             <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
           </div>
         </li>
+        <li id="nav_register" class="nav-item">
+          <a class="nav-link" href="Views/register.php" role="button">
+            <i class="fas fa-user-plus"></i> Registrarse
+          </a>
+        </li>
         <li id="nav_login" class="nav-item">
           <a class="nav-link" href="Views/login.php" role="button">
             <i class="far fa-user"></i> Iniciar sesión

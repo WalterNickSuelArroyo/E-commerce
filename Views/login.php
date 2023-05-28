@@ -55,7 +55,7 @@
                     <a href="">He olvidado mi contraseña</a>
                 </p>
                 <p class="mb-0">
-                    <a href="" class="text-center">Registrarse</a>
+                    <a href="register.php" class="text-center">Registrarse</a>
                 </p>
             </div>
             <!-- /.login-card-body -->
