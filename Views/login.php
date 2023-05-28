@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../Util/Css/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../Util/Css/adminlte.min.css">
+    <link rel="stylesheet" href="../Util/Css/toastr.min.css">
 </head>
 
 <body class="hold-transition login-page">
@@ -69,6 +70,7 @@
     <!-- AdminLTE App -->
     <script src="../Util/Js/adminlte.min.js"></script>
     <script src="login.js"></script>
+    <script src="../Util/Js/toastr.min.js"></script>
 </body>
 
 </html>
