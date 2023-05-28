@@ -1,5 +1,14 @@
 $(document).ready(function(){
     var funcion;
+    verificar_sesion();
+    function verificar_sesion(){
+        funcion = 'verificar_sesion';
+        $.post('../Controllers/UsuarioController.php',{funcion},(response)=>{
+            if (response != '') {
+                location.href = '../index.php';
+            }
+        })
+    }
     $('#form-login').submit(e=>{
         funcion = 'login';
         let user = $('#user').val();
@@ -7,6 +16,7 @@ $(document).ready(function(){
         $.post('../Controllers/UsuarioController.php',{user,pass,funcion},(response)=>{
             if (response == 'logueado') {
                 toastr.success('Logueado');
+                location.href = '../index.php';
             }else {
                 toastr.error('Usuario o contraseña incorrectas');
             }
