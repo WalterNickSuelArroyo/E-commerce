@@ -15,6 +15,27 @@
     <link rel="stylesheet" href="../Util/Css/adminlte.min.css">
     <link rel="stylesheet" href="../Util/Css/toastr.min.css">
 </head>
+<div class="modal fade" id="terminos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="card card-success">
+                <div class="card-header">
+                    <h5 class="card-title">Terminos y condiciones</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <p>* Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, magni.</p>
+                    <p>*Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo facilis neque quaerat praesentium, accusamus aliquid.</p> 
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <body class="hold-transition login-page">
     <div class="mt-5">
@@ -78,8 +99,9 @@
                             <div class="form-group mb-0">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" name="terms" class="custom-control-input" id="terms">
-                                    <label class="custom-control-label" for="terms">Estoy de acuerdo con los <a
-                                            href="#">terminos de servicio</a>.</label>
+                                    <label class="custom-control-label" for="terms">Estoy de acuerdo con los <a href="#"
+                                            data-toggle="modal" data-target="#terminos">terminos de
+                                            servicio</a>.</label>
                                 </div>
                             </div>
                         </div>
@@ -118,28 +140,85 @@
         });
         $('#form-register').validate({
             rules: {
+                nombres: {
+                    required: true,
+                },
+                apellidos: {
+                    required: true,
+                },
+                username: {
+                    required: true,
+                    minlength: 8,
+                    maxlength: 20,
+                },
+                pass: {
+                    required: true,
+                    minlength: 8,
+                    maxlength: 20,
+                },
+                pass_repeat: {
+                    required: true,
+                    equalTo: "#pass"
+                },
+                dni: {
+                    required: true,
+                    digits:true,
+                    minlength: 8,
+                    maxlength: 8
+                },
                 email: {
                     required: true,
                     email: true,
                 },
-                password: {
+                telefono: {
                     required: true,
-                    minlength: 5
+                    digits:true,
+                    minlength: 9,
+                    maxlength: 9
                 },
                 terms: {
                     required: true
                 },
             },
             messages: {
+                nombres: {
+                    required: "Por favor, ingrese su(s) nombre(s)"
+                },
+                apellidos: {
+                    required: "Por favor, ingrese sus apellidos"
+                },
+                username: {
+                    required: "Por favor, ingrese su nombre de usuario",
+                    minlength: "Tu nombre de usuario debe tener al menos 8 caracteres",
+                    maxlength: "Tu nombre de usuario debe tener menos de 20 caracteres"
+                },
+                pass: {
+                    required: "Por favor, ingrese su contraseña",
+                    minlength: "Tu contraseña debe tener al menos 8 caracteres",
+                    maxlength: "Tu contraseña debe tener menos de 20 caracteres"
+                },
+                pass_repeat: {
+                    required: "Por favor, vuelva a ingresar su contraseña",
+                    equalTo: "Las contraseñas no coinciden"
+                },
+                dni: {
+                    required: "Por favor, ingrese su DNI",
+                    digits: "El DNI solo debe contener numeros",
+                    minlength: "El DNI debe ser de 8 caracteres",
+                    maxlength: "El DNI debe ser de 8 caracteres"
+                },
                 email: {
-                    required: "Please enter a email address",
-                    email: "Please enter a valid email address"
+                    required: "Por favor, ingrese su email",
+                    email: "Por favor, ingrese un email valido"
                 },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long"
+                telefono: {
+                    required: "Por favor, ingrese su telefono",
+                    email: "Por favor, ingrese un telefono valido",
+                    digits: "El telefono solo debe contener numeros",
+                    minlength: "El telefono debe ser de 9 caracteres",
+                    maxlength: "El telefono debe ser de 9 caracteres"
                 },
-                terms: "Please accept our terms"
+                terms: "Por favor, acepte los terminos y condiciones"
             },
             errorElement: 'span',
             errorPlacement: function (error, element) {
@@ -148,9 +227,11 @@
             },
             highlight: function (element, errorClass, validClass) {
                 $(element).addClass('is-invalid');
+                $(element).removeClass('is-valid');
             },
             unhighlight: function (element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
+                $(element).addClass('is-valid');
             }
         });
     });
