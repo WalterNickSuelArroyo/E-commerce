@@ -26,29 +26,67 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Registrarse</p>
-                <form id="quickForm">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" name="email" class="form-control" id="exampleInputEmail1"
-                                placeholder="Enter email">
+                <form id="form-register">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="username">Nombre de usuario</label>
+                                <input type="text" name="username" class="form-control" id="username"
+                                    placeholder="Ingrese el nombre de usuario">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" name="password" class="form-control" id="exampleInputPassword1"
-                                placeholder="Password">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="pass">Contraseña</label>
+                                <input type="password" name="pass" class="form-control" id="pass"
+                                    placeholder="Ingrese la contraseña">
+                            </div>
+                            <div class="form-group">
+                                <label for="nombres">Nombres</label>
+                                <input type="text" name="nombres" class="form-control" id="nombres"
+                                    placeholder="Ingrese sus nombres">
+                            </div>
+                            <div class="form-group">
+                                <label for="dni">DNI</label>
+                                <input type="text" name="dni" class="form-control" id="dni"
+                                    placeholder="Ingrese su DNI">
+                            </div>
+                            <div class="form-group">
+                                <label for="telefono">Telefono</label>
+                                <input type="text" name="telefono" class="form-control" id="telefono"
+                                    placeholder="Ingrese su telefono">
+                            </div>
                         </div>
-                        <div class="form-group mb-0">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
-                                <label class="custom-control-label" for="exampleCheck1">I agree to the <a href="#">terms
-                                        of service</a>.</label>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="pass_repeat">Repetir contraseña</label>
+                                <input type="password" name="pass_repeat" class="form-control" id="pass_repeat"
+                                    placeholder="Ingrese nuevamente la contraseña">
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidos">Apellidos</label>
+                                <input type="text" name="apellidos" class="form-control" id="apellidos"
+                                    placeholder="Ingrese sus apellidos">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" name="email" class="form-control" id="email"
+                                    placeholder="Ingrese su email">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group mb-0">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="terms" class="custom-control-input" id="terms">
+                                    <label class="custom-control-label" for="terms">Estoy de acuerdo con los <a
+                                            href="#">terminos de servicio</a>.</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-lg bg-gradient-primary">Registrarse</button>
                     </div>
                 </form>
 
@@ -78,7 +116,7 @@
                 alert("Form successful submitted!");
             }
         });
-        $('#quickForm').validate({
+        $('#form-register').validate({
             rules: {
                 email: {
                     required: true,
