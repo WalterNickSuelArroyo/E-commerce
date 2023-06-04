@@ -1,4 +1,14 @@
 $(document).ready(function () {
+    var funcion;
+    verificar_sesion();
+    function verificar_sesion(){
+        funcion = 'verificar_sesion';
+        $.post('../Controllers/UsuarioController.php',{funcion},(response)=>{
+            if (response != '') {
+                location.href = '../index.php';
+            }
+        })
+    }
     $.validator.setDefaults({
         submitHandler: function () {
             let username = $('#username').val();
