@@ -38,3 +38,14 @@ if ($_POST['funcion'] == 'verificar_usuario') {
         echo 'success';
     }
 }
+if ($_POST['funcion'] == 'registrar_usuario') {
+    $username = $_POST['username'];
+    $pass = $_POST['pass'];
+    $nombres = $_POST['nombres'];
+    $apellidos = $_POST['apellidos'];
+    $dni = $_POST['dni'];
+    $email = $_POST['email'];
+    $telefono = $_POST['telefono'];
+    $usuario->registrar_usuario($username, $pass, $nombres, $apellidos, $dni, $email, $telefono);
+    echo 'success';
+}

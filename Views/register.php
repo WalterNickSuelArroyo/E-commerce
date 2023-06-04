@@ -14,6 +14,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="../Util/Css/adminlte.min.css">
     <link rel="stylesheet" href="../Util/Css/toastr.min.css">
+    <link rel="stylesheet" href="../Util/Css/sweetalert2.min.css">
 </head>
 <div class="modal fade" id="terminos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -128,6 +129,7 @@
     <script src="../Util/Js/toastr.min.js"></script>
     <script src="../Util/Js/jquery.validate.min.js"></script>
     <script src="../Util/Js/additional-methods.min.js"></script>
+    <script src="../Util/Js/sweetalert2.min.js"></script>
     <script src="register.js"></script>
 </body>
 

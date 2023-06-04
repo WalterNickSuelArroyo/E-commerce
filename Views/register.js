@@ -1,7 +1,36 @@
 $(document).ready(function () {
     $.validator.setDefaults({
         submitHandler: function () {
-            alert("Form successful submitted!");
+            let username = $('#username').val();
+            let pass = $('#pass').val();
+            let nombres = $('#nombres').val();
+            let apellidos = $('#apellidos').val();
+            let dni = $('#dni').val();
+            let email = $('#email').val();
+            let telefono = $('#telefono').val();
+            funcion = "registrar_usuario";
+            $.post('../Controllers/UsuarioController.php', { username, pass, nombres, apellidos, dni, email, telefono, funcion }, (response) => {
+                response = response.trim(); //A veces el success viene con espacios, por eso se aplica ese metodo para elimiar el espacio
+                if (response == "success") {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Se ha registrado correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function(){
+                        $('#form-register').trigger('reset');
+                        location.href = '../Views/login.php';
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: '<a href="">Why do I have this issue?</a>'
+                    })
+                }
+            })
         }
     });
     jQuery.validator.addMethod("usuario_existente",
