@@ -2,6 +2,39 @@ $(document).ready(function(){
     var funcion;
     verificar_sesion();
     obtener_datos();
+    $('#departamento').select2({
+        placeholder: 'Seleccione un departamento',
+        language: {
+            noResults: function(){
+                return "No hay resultado";
+            },
+            searching: function(){
+                return "Buscando...";
+            }
+        }
+    });
+    $('#provincia').select2({
+        placeholder: 'Seleccione una provincia',
+        language: {
+            noResults: function(){
+                return "No hay resultado";
+            },
+            searching: function(){
+                return "Buscando...";
+            }
+        }
+    });
+    $('#distrito').select2({
+        placeholder: 'Seleccione un distrito',
+        language: {
+            noResults: function(){
+                return "No hay resultado";
+            },
+            searching: function(){
+                return "Buscando...";
+            }
+        }
+    });
     function verificar_sesion(){
         funcion = 'verificar_sesion';
         $.post('../Controllers/UsuarioController.php',{funcion},(response)=>{

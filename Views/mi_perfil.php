@@ -1,6 +1,46 @@
 <?php
 include_once 'Layouts/general/header.php';
 ?>
+<!-- Modal -->
+<div class="modal fade" id="modal_direcciones" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar direcciones</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-direccion">
+                    <div class="form-group">
+                        <label>Departamento: </label>
+                        <select id="departamento" class="form-control" style="width:100%" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Provincia: </label>
+                        <select id="provincia" class="form-control" style="width:100%" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Distrito: </label>
+                        <select id="distrito" class="form-control" style="width:100%" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Direccion: </label>
+                        <input id="direccion" class="form-control" placeholder="Ingrese su direccion" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Referencia: </label>
+                        <input id="referencia" class="form-control" placeholder="Ingrese alguna referencia">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
 <title>Mi perfil | Ecommerce WNSA</title>
 <section class="content">
     <div class="container-fluid">
@@ -74,7 +114,7 @@ include_once 'Layouts/general/header.php';
                     <div class="card-header border-bottom-0">
                         <strong>Mis direcciones de envio</strong>
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool">
+                            <button type="button" class="btn btn-tool" data-bs-toggle="modal" data-bs-target="#modal_direcciones">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -96,30 +136,30 @@ include_once 'Layouts/general/header.php';
                     </div>
                 </div>
                 <div class="card card-light d-flex flex-fill">
-                            <div class="card-header border-bottom-0">
-                                <strong>Mis tarjetas de pago</strong>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
+                    <div class="card-header border-bottom-0">
+                        <strong>Mis tarjetas de pago</strong>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 mt-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <h2 class="lead"><b>Nicole Pearson</b></h2>
+                                <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                                <ul class="ml-4 mb-0 fa-ul text-muted">
+                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
+                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
+                                </ul>
                             </div>
-                            <div class="card-body pt-0 mt-3">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <h2 class="lead"><b>Nicole Pearson</b></h2>
-                                        <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
-                                        <ul class="ml-4 mb-0 fa-ul text-muted">
-                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
-                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <img src="../Util/Img/credito.png" alt="user-avatar" class="img-circle img-fluid">
-                                    </div>
-                                </div>
+                            <div class="col-4 text-center">
+                                <img src="../Util/Img/credito.png" alt="user-avatar" class="img-circle img-fluid">
                             </div>
                         </div>
+                    </div>
+                </div>
             </div><!-- /.container-fluid -->
             <!-- /.col -->
             <div class="col-md-9">
