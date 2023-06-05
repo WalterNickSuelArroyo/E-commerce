@@ -33,4 +33,14 @@ class Usuario
         $query = $this->acceso->prepare($sql);
         $query->execute(array(':user' => $username,':pass' => $pass,':nombres' => $nombres,':apellidos' => $apellidos,':dni' => $dni,':email' => $email,':telefono' => $telefono,':id_tipo' => 2));
     }
+    function obtener_datos($user)
+    {
+        $sql = "SELECT * FROM usuario
+                JOIN tipo_usuario ON usuario.id_tipo = tipo_usuario.id
+                WHERE usuario.id=:user";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':user' => $user));
+        $this->objetos = $query->fetchAll();
+        return $this->objetos;
+    }
 }

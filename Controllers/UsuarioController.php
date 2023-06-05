@@ -15,7 +15,6 @@ if ($_POST['funcion'] == 'login') {
         }
         echo 'logueado';
     }
-
 }
 if ($_POST['funcion'] == 'verificar_sesion') {
     if (!empty($_SESSION['id'])) {
@@ -48,4 +47,21 @@ if ($_POST['funcion'] == 'registrar_usuario') {
     $telefono = $_POST['telefono'];
     $usuario->registrar_usuario($username, $pass, $nombres, $apellidos, $dni, $email, $telefono);
     echo 'success';
+}
+if ($_POST['funcion'] == 'obtener_datos') {
+    $usuario->obtener_datos($_SESSION['id']);
+    foreach ($usuario->objetos as $objeto) {
+        $json[] = array(
+            'username' => $objeto->user,
+            'nombres' => $objeto->nombres,
+            'apellidos' => $objeto->apellidos,
+            'dni' => $objeto->dni,
+            'email' => $objeto->email,
+            'telefono' => $objeto->telefono,
+            'avatar' => $objeto->avatar,
+            'tipo_usuario' => $objeto->tipo,
+        );
+    }
+    $jsonstring = json_encode($json[0]);
+    echo $jsonstring;
 }
