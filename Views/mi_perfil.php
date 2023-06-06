@@ -31,11 +31,11 @@ include_once 'Layouts/general/header.php';
                         <label>Referencia: </label>
                         <input id="referencia" class="form-control" placeholder="Ingrese alguna referencia">
                     </div>
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="submit" class="btn btn-primary">Crear</button>
+                </form>
             </div>
         </div>
     </div>

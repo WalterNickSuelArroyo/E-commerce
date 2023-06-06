@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="../Util/Css/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../Util/Css/adminlte.min.css">
+  <link rel="stylesheet" href="../Util/Css/sweetalert2.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
