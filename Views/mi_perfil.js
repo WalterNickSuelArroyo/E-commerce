@@ -1,15 +1,16 @@
-$(document).ready(function(){
+$(document).ready(function () {
     var funcion;
     verificar_sesion();
     obtener_datos();
     llenar_departamentos();
+    llenar_direcciones();
     $('#departamento').select2({
         placeholder: 'Seleccione un departamento',
         language: {
-            noResults: function(){
+            noResults: function () {
                 return "No hay resultado";
             },
-            searching: function(){
+            searching: function () {
                 return "Buscando...";
             }
         }
@@ -17,10 +18,10 @@ $(document).ready(function(){
     $('#provincia').select2({
         placeholder: 'Seleccione una provincia',
         language: {
-            noResults: function(){
+            noResults: function () {
                 return "No hay resultado";
             },
-            searching: function(){
+            searching: function () {
                 return "Buscando...";
             }
         }
@@ -28,21 +29,54 @@ $(document).ready(function(){
     $('#distrito').select2({
         placeholder: 'Seleccione un distrito',
         language: {
-            noResults: function(){
+            noResults: function () {
                 return "No hay resultado";
             },
-            searching: function(){
+            searching: function () {
                 return "Buscando...";
             }
         }
     });
+    function llenar_direcciones() {
+        funcion = "llenar_direcciones";
+        $.post('../Controllers/UsuarioDistritoController.php', { funcion }, (response) => {
+            let direcciones = JSON.parse(response);
+            let contador=0;
+            let template = '';
+            direcciones.forEach(direccion => {
+                contador++;
+                template += `
+                <div class="callout callout-info">
+                    <div class="card-header">
+                        <strong>direccion ${contador}</strong>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="lead"><b>${direccion.direccion}</b></h2>
+                        <p class="text-muted text-sm"><b>Referencia: ${direccion.referencia}</b></p>
+                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> 
+                                ${direccion.distrito}, ${direccion.provincia}, ${direccion.departamento}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+`
+            });
+            $('#direcciones').html(template);
+        })
+    }
     function llenar_departamentos() {
         funcion = "llenar_departamentos";
-        $.post('../Controllers/DepartamentoController.php',{funcion},(response)=>{
+        $.post('../Controllers/DepartamentoController.php', { funcion }, (response) => {
             let departamentos = JSON.parse(response);
-            let template='';
-            departamentos.forEach(departamento=>{
-                template+=`
+            let template = '';
+            departamentos.forEach(departamento => {
+                template += `
                 <option value="${departamento.id}">${departamento.nombre}</option>
                 `;
             });
@@ -50,30 +84,30 @@ $(document).ready(function(){
             $('#departamento').val('').trigger('change');
         })
     }
-    $('#departamento').change(function(){
+    $('#departamento').change(function () {
         let id_departamento = $('#departamento').val();
-        funcion="llenar_provincias";
-        $.post('../Controllers/ProvinciaController.php',{funcion,id_departamento},(response)=>{
+        funcion = "llenar_provincias";
+        $.post('../Controllers/ProvinciaController.php', { funcion, id_departamento }, (response) => {
             let provincias = JSON.parse(response);
-            let template='';
-            provincias.forEach(provincia=>{
-                template+=`
+            let template = '';
+            provincias.forEach(provincia => {
+                template += `
                 <option value="${provincia.id}">${provincia.nombre}</option>
                 `;
             });
             $('#provincia').html(template);
             $('#provincia').val('').trigger('change');
-            
+
         })
     })
-    $('#provincia').change(function(){
+    $('#provincia').change(function () {
         let id_provincia = $('#provincia').val();
-        funcion="llenar_distritos";
-        $.post('../Controllers/DistritoController.php',{funcion,id_provincia},(response)=>{
+        funcion = "llenar_distritos";
+        $.post('../Controllers/DistritoController.php', { funcion, id_provincia }, (response) => {
             let distritos = JSON.parse(response);
-            let template='';
-            distritos.forEach(distrito=>{
-                template+=`
+            let template = '';
+            distritos.forEach(distrito => {
+                template += `
                 <option value="${distrito.id}">${distrito.nombre}</option>
                 `;
             });
@@ -81,18 +115,18 @@ $(document).ready(function(){
             $('#distrito').val('').trigger('change');
         })
     })
-    
-    function verificar_sesion(){
+
+    function verificar_sesion() {
         funcion = 'verificar_sesion';
-        $.post('../Controllers/UsuarioController.php',{funcion},(response)=>{
+        $.post('../Controllers/UsuarioController.php', { funcion }, (response) => {
             console.log(response);
             if (response != '') {
                 let sesion = JSON.parse(response);
                 $('#nav_login').hide();
                 $('#nav_register').hide();
                 $('#usuario_nav').text(sesion.user + ' #' + sesion.id);
-                $('#avatar_nav').attr('src','../Util/Img/'+sesion.avatar);
-                $('#avatar_menu').attr('src','../Util/Img/'+sesion.avatar);
+                $('#avatar_nav').attr('src', '../Util/Img/' + sesion.avatar);
+                $('#avatar_menu').attr('src', '../Util/Img/' + sesion.avatar);
                 $('#usuario_menu').text(sesion.user);
             }
             else {
@@ -101,25 +135,25 @@ $(document).ready(function(){
             }
         })
     }
-    function obtener_datos(){
+    function obtener_datos() {
         funcion = 'obtener_datos';
-        $.post('../Controllers/UsuarioController.php',{funcion},(response)=>{
+        $.post('../Controllers/UsuarioController.php', { funcion }, (response) => {
             let usuario = JSON.parse(response)
             $('#username').text(usuario.username);
             $('#tipo_usuario').text(usuario.tipo_usuario);
             $('#nombres').text(usuario.nombres + '' + usuario.apellidos);
-            $('#avatar_perfil').attr('src','../Util/Img/'+usuario.avatar);
+            $('#avatar_perfil').attr('src', '../Util/Img/' + usuario.avatar);
             $('#dni').text(usuario.dni);
             $('#email').text(usuario.email);
             $('#telefono').text(usuario.telefono);
         })
     }
-    $('#form-direccion').submit(e=>{
+    $('#form-direccion').submit(e => {
         funcion = 'crear_direccion';
         let id_distrito = $('#distrito').val();
         let direccion = $('#direccion').val();
         let referencia = $('#referencia').val();
-        $.post('../Controllers/UsuarioDistritoController.php',{id_distrito,direccion,referencia,funcion},(response)=>{
+        $.post('../Controllers/UsuarioDistritoController.php', { id_distrito, direccion, referencia, funcion }, (response) => {
             if (response == "success") {
                 Swal.fire({
                     position: 'center',
@@ -127,7 +161,7 @@ $(document).ready(function(){
                     title: 'Se ha registrado su direccion',
                     showConfirmButton: false,
                     timer: 1000
-                }).then(function(){
+                }).then(function () {
                     $('#form-direccion').trigger('reset');
                     $('#departamento').val('').trigger('change');
                 })

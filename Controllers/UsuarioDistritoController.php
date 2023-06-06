@@ -7,6 +7,22 @@ if ($_POST['funcion'] == 'crear_direccion') {
     $id_distrito=$_POST['id_distrito'];
     $direccion=$_POST['direccion'];
     $referencia=$_POST['referencia'];
-    $usuario_distrito->llenar_distritos($id_usuario,$id_distrito,$direccion,$referencia);
+    $usuario_distrito->crear_direccion($id_usuario,$id_distrito,$direccion,$referencia);
     echo 'success';
+}
+if ($_POST['funcion'] == 'llenar_direcciones') {
+    $id_usuario=$_SESSION['id'];
+    $usuario_distrito->llenar_direcciones($id_usuario);
+    $json=array();
+    foreach ($usuario_distrito->objetos as $objeto) {
+        $json[]=array(
+            'direccion'=>$objeto->direccion,
+            'referencia'=>$objeto->referencia,
+            'departamento'=>$objeto->departamento,
+            'provincia'=>$objeto->provincia,
+            'distrito'=>$objeto->distrito,
+        );
+    }
+    $jsonstring=json_encode($json);
+    echo $jsonstring;
 }
