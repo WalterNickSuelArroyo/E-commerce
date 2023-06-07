@@ -41,7 +41,7 @@ $(document).ready(function () {
         funcion = "llenar_direcciones";
         $.post('../Controllers/UsuarioDistritoController.php', { funcion }, (response) => {
             let direcciones = JSON.parse(response);
-            let contador=0;
+            let contador = 0;
             let template = '';
             direcciones.forEach(direccion => {
                 contador++;
@@ -50,7 +50,7 @@ $(document).ready(function () {
                     <div class="card-header">
                         <strong>direccion ${contador}</strong>
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool">
+                            <button dir_id="${direccion.id}" type="button" class="eliminar_direccion btn btn-tool">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </div>
@@ -70,6 +70,47 @@ $(document).ready(function () {
             $('#direcciones').html(template);
         })
     }
+    $(document).on('click', '.eliminar_direccion', (e) => {
+        let elemento = $(this)[0].activeElement;
+        let id = $(elemento).attr('dir_id');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success m-3',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: '¿Desea borrar esta direccion?',
+            text: "Esta accion puede traer consecuencias!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, borra esto!',
+            cancelButtonText: 'No, deseo cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                funcion = "eliminar_direccion";
+                $.post('../Controllers/UsuarioDistritoController.php', { funcion, id }, (response) => {
+                    console.log(response);
+                })
+                    /*swalWithBootstrapButtons.fire(
+                        'Borrado!',
+                        'La direccion fue borrada.',
+                        'success'
+                    )*/
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelado',
+                        'La direccion no se borro',
+                        'error'
+                    )
+                }
+            })
+    })
     function llenar_departamentos() {
         funcion = "llenar_departamentos";
         $.post('../Controllers/DepartamentoController.php', { funcion }, (response) => {

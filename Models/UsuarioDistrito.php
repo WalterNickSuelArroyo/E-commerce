@@ -17,14 +17,20 @@ class UsuarioDistrito
     }
     function llenar_direcciones($id_usuario)
     {
-        $sql = "SELECT direccion,referencia,d.nombre as distrito, p.nombre as provincia, dep.nombre as departamento FROM usuario_distrito ud
+        $sql = "SELECT ud.id as id,direccion,referencia,d.nombre as distrito, p.nombre as provincia, dep.nombre as departamento FROM usuario_distrito ud
         JOIN distrito d ON d.id=ud.id_distrito
         JOIN provincia p ON p.id=d.id_provincia
         JOIN departamento dep ON dep.id=p.id_departamento
-        WHERE id_usuario=:id";
+        WHERE id_usuario=:id and estado='A'";
         $query = $this->acceso->prepare($sql);
         $query->execute(array(':id'=>$id_usuario));
         $this->objetos = $query->fetchAll();
         return $this->objetos;
+    }
+    function eliminar_direccion($id_direccion)
+    {
+        $sql = "UPDATE usuario_distrito SET estado='I' WHERE id=:id_direccion";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':id_direccion' => $id_direccion));
     }
 }
