@@ -40,6 +40,7 @@ $(document).ready(function () {
     function llenar_direcciones() {
         funcion = "llenar_direcciones";
         $.post('../Controllers/UsuarioDistritoController.php', { funcion }, (response) => {
+            console.log(response);
             let direcciones = JSON.parse(response);
             let contador = 0;
             let template = '';
@@ -93,23 +94,38 @@ $(document).ready(function () {
             if (result.isConfirmed) {
                 funcion = "eliminar_direccion";
                 $.post('../Controllers/UsuarioDistritoController.php', { funcion, id }, (response) => {
-                    console.log(response);
+                    if (response == "success") {
+                        swalWithBootstrapButtons.fire(
+                            'Borrado!',
+                            'La direccion fue borrada.',
+                            'success'
+                        )
+                        llenar_direcciones();
+                    } else if (response == "error") {
+                        swalWithBootstrapButtons.fire(
+                            'No se borro',
+                            'Hubo alteraciones en la integridad de datos',
+                            'error'
+                        )
+                    } else {
+                        swalWithBootstrapButtons.fire(
+                            'No se ha borrado',
+                            'tenemos problemas en el sistema',
+                            'error'
+                        )
+                    }
                 })
-                    /*swalWithBootstrapButtons.fire(
-                        'Borrado!',
-                        'La direccion fue borrada.',
-                        'success'
-                    )*/
-                } else if (
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelado',
-                        'La direccion no se borro',
-                        'error'
-                    )
-                }
-            })
+                /**/
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelado',
+                    'La direccion no se borro',
+                    'error'
+                )
+            }
+        })
     })
     function llenar_departamentos() {
         funcion = "llenar_departamentos";
