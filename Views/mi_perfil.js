@@ -232,4 +232,92 @@ $(document).ready(function () {
         });
         e.preventDefault();
     })
+    $(document).on('click', '.editar_datos',(e)=>{
+        funcion="obtener_datos";
+        $.post('../Controllers/UsuarioController.php',{funcion},(response)=>{
+            let usuario = JSON.parse(response);
+            $('#nombres_mod').val(usuario.nombres);
+            $('#apellidos_mod').val(usuario.apellidos);
+            $('#dni_mod').val(usuario.dni);
+            $('#email_mod').val(usuario.email);
+            $('#telefono_mod').val(usuario.telefono);
+        })
+    })
+    $.validator.setDefaults({
+        submitHandler: function () {
+            alert('todos los campos validados')
+        }
+    });
+    jQuery.validator.addMethod("letras",
+        function (value, element) {
+            let variable = value.replace(/ /g, "");
+            return /^[A-Za-z]+$/.test(variable);
+        }
+        , "Este campo solo permite letras");
+    $('#form-datos').validate({
+        rules: {
+            nombres_mod: {
+                required: true,
+                letras: true
+            },
+            apellidos_mod: {
+                required: true,
+                letras: true
+            },
+            dni_mod: {
+                required: true,
+                digits: true,
+                minlength: 8,
+                maxlength: 8
+            },
+            email_mod: {
+                required: true,
+                email: true,
+            },
+            telefono_mod: {
+                required: true,
+                digits: true,
+                minlength: 9,
+                maxlength: 9
+            }
+        },
+        messages: {
+            nombres_mod: {
+                required: "Por favor, ingrese su(s) nombre(s)"
+            },
+            apellidos_mod: {
+                required: "Por favor, ingrese sus apellidos"
+            },
+            dni_mod: {
+                required: "Por favor, ingrese su DNI",
+                digits: "El DNI solo debe contener numeros",
+                minlength: "El DNI debe ser de 8 caracteres",
+                maxlength: "El DNI debe ser de 8 caracteres"
+            },
+            email_mod: {
+                required: "Por favor, ingrese su email",
+                email: "Por favor, ingrese un email valido"
+            },
+            telefono_mod: {
+                required: "Por favor, ingrese su telefono",
+                email: "Por favor, ingrese un telefono valido",
+                digits: "El telefono solo debe contener numeros",
+                minlength: "El telefono debe ser de 9 caracteres",
+                maxlength: "El telefono debe ser de 9 caracteres"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+            $(element).removeClass('is-valid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+            $(element).addClass('is-valid');
+        }
+    });
 })

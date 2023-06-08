@@ -2,6 +2,46 @@
 include_once 'Layouts/general/header.php';
 ?>
 <!-- Modal -->
+<div class="modal fade" id="modal_datos" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar datos personales</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-datos">
+                    <div class="form-group">
+                        <label for="nombres_mod">Nombres</label>
+                        <input type="text" name="nombres_mod" class="form-control" id="nombres_mod" placeholder="Ingrese sus nombres">
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidos_mod">Apellidos</label>
+                        <input type="text" name="apellidos_mod" class="form-control" id="apellidos_mod" placeholder="Ingrese sus apellidos">
+                    </div>
+                    <div class="form-group">
+                        <label for="dni_mod">DNI</label>
+                        <input type="text" name="dni_mod" class="form-control" id="dni_mod" placeholder="Ingrese su DNI">
+                    </div>
+                    <div class="form-group">
+                        <label for="email_mod">Email</label>
+                        <input type="text" name="email_mod" class="form-control" id="email_mod" placeholder="Ingrese su email">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono_mod">Telefono</label>
+                        <input type="text" name="telefono_mod" class="form-control" id="telefono_mod" placeholder="Ingrese su telefono">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!-- Modal -->
 <div class="modal fade" id="modal_direcciones" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -89,7 +129,7 @@ include_once 'Layouts/general/header.php';
                     <div class="card-header border-bottom-0">
                         <strong>Mis datos personales</strong>
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool">
+                            <button type="button" class="editar_datos btn btn-tool" data-bs-toggle="modal" data-bs-target="#modal_datos">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
                         </div>
@@ -120,7 +160,7 @@ include_once 'Layouts/general/header.php';
                         </div>
                     </div>
                     <div id="direcciones" class="card-body pt-0 mt-3">
-                        
+
                     </div>
                 </div>
                 <div class="card card-light d-flex flex-fill">
