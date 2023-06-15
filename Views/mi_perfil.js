@@ -183,8 +183,8 @@ $(document).ready(function () {
                 $('#nav_login').hide();
                 $('#nav_register').hide();
                 $('#usuario_nav').text(sesion.user + ' #' + sesion.id);
-                $('#avatar_nav').attr('src', '../Util/Img/' + sesion.avatar);
-                $('#avatar_menu').attr('src', '../Util/Img/' + sesion.avatar);
+                $('#avatar_nav').attr('src', '../Util/Img/Users/' + sesion.avatar);
+                $('#avatar_menu').attr('src', '../Util/Img/Users/' + sesion.avatar);
                 $('#usuario_menu').text(sesion.user);
             }
             else {
@@ -199,8 +199,8 @@ $(document).ready(function () {
             let usuario = JSON.parse(response)
             $('#username').text(usuario.username);
             $('#tipo_usuario').text(usuario.tipo_usuario);
-            $('#nombres').text(usuario.nombres + '' + usuario.apellidos);
-            $('#avatar_perfil').attr('src', '../Util/Img/' + usuario.avatar);
+            $('#nombres').text(usuario.nombres + ' ' + usuario.apellidos);
+            $('#avatar_perfil').attr('src', '../Util/Img/Users/' + usuario.avatar);
             $('#dni').text(usuario.dni);
             $('#email').text(usuario.email);
             $('#telefono').text(usuario.telefono);
@@ -258,6 +258,25 @@ $(document).ready(function () {
                 contentType: false,
                 success: function(response){
                     console.log(response);
+                    if (response == "success") {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Se ha editado sus datos',
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then(function () {
+                            verificar_sesion();
+                            obtener_datos();
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Hubo conflicto al editar sus datos, comuniquese con el area de sistemas',
+                        })
+                    }
+                    
                 }
             })
         }

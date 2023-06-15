@@ -43,9 +43,29 @@ class Usuario
         $this->objetos = $query->fetchAll();
         return $this->objetos;
     }
-    function editar_datos($id_usuario, $nombres, $apellidos, $dni, $email, $telefono)
+    function editar_datos($id_usuario, $nombres, $apellidos, $dni, $email, $telefono,$nombre)
     {
-        $sql = "UPDATE usuario SET nombres=:nombres,
+        if ($nombre != '') {
+            $sql = "UPDATE usuario SET nombres=:nombres,
+            apellidos=:apellidos,
+            dni=:dni,
+            email=:email,
+            telefono=:telefono,
+            avatar=:avatar
+            WHERE id=:id_usuario";
+            $query = $this->acceso->prepare($sql);
+            $variables = array(
+            ':id_usuario'=>$id_usuario,
+            ':nombres'=>$nombres,
+            ':apellidos'=>$apellidos,
+            ':dni'=>$dni,
+            ':email'=>$email,
+            ':telefono'=>$telefono,
+            ':avatar'=>$nombre
+            );
+            $query->execute($variables);
+        } else {
+            $sql = "UPDATE usuario SET nombres=:nombres,
                                     apellidos=:apellidos,
                                     dni=:dni,
                                     email=:email,
@@ -61,5 +81,6 @@ class Usuario
             ':telefono'=>$telefono
         );
         $query->execute($variables);
+        }
     }
 }

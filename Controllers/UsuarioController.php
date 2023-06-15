@@ -74,7 +74,22 @@ if ($_POST['funcion'] == 'editar_datos') {
     $email = $_POST['email_mod'];
     $telefono = $_POST['telefono_mod'];
     $avatar = $_FILES['avatar_mod']['name'];
-    echo $avatar;
-    //$usuario->editar_datos($id_usuario, $nombres, $apellidos, $dni, $email, $telefono);
+    if ($avatar != '') {
+        $nombre = uniqid().'-'.$avatar;
+        $ruta = '../Util/Img/Users/'.$nombre;
+        move_uploaded_file($_FILES['avatar_mod']['tmp_name'],$ruta);
+        $usuario->obtener_datos($id_usuario);
+        foreach ($usuario->objetos as $objeto) {
+            $avatar_actual=$objeto->avatar;
+            if ($avatar_actual != 'user_default.png') {
+                unlink('../Util/Img/Users/'.$avatar_actual);
+            }
+        }
+        $_SESSION['avatar']=$nombre;
+    } else {
+        $nombre='';
+    }
+    
+    $usuario->editar_datos($id_usuario, $nombres, $apellidos, $dni, $email, $telefono,$nombre);
     echo 'success';
 }
