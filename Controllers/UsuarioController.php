@@ -50,6 +50,7 @@ if ($_POST['funcion'] == 'registrar_usuario') {
 }
 if ($_POST['funcion'] == 'obtener_datos') {
     $usuario->obtener_datos($_SESSION['id']);
+    $json = array();
     foreach ($usuario->objetos as $objeto) {
         $json[] = array(
             'username' => $objeto->user,
@@ -64,4 +65,16 @@ if ($_POST['funcion'] == 'obtener_datos') {
     }
     $jsonstring = json_encode($json[0]);
     echo $jsonstring;
+}
+if ($_POST['funcion'] == 'editar_datos') {
+    $id_usuario = $_SESSION['id'];
+    $nombres = $_POST['nombres_mod'];
+    $apellidos = $_POST['apellidos_mod'];
+    $dni = $_POST['dni_mod'];
+    $email = $_POST['email_mod'];
+    $telefono = $_POST['telefono_mod'];
+    $avatar = $_FILES['avatar_mod']['name'];
+    echo $avatar;
+    //$usuario->editar_datos($id_usuario, $nombres, $apellidos, $dni, $email, $telefono);
+    echo 'success';
 }

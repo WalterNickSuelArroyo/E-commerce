@@ -10,7 +10,7 @@ include_once 'Layouts/general/header.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="form-datos">
+                <form id="form-datos" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nombres_mod">Nombres</label>
                         <input type="text" name="nombres_mod" class="form-control" id="nombres_mod" placeholder="Ingrese sus nombres">
@@ -31,6 +31,15 @@ include_once 'Layouts/general/header.php';
                         <label for="telefono_mod">Telefono</label>
                         <input type="text" name="telefono_mod" class="form-control" id="telefono_mod" placeholder="Ingrese su telefono">
                     </div>
+                    <div class="form-group">
+                    <label for="exampleInputFile">Avatar</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="avatar_mod" id="avatar_mod">
+                        <label class="custom-file-label" for="exampleInputFile">Seleccione un avatar</label>
+                      </div>
+                    </div>
+                  </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

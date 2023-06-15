@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var funcion;
+    bsCustomFileInput.init();
     verificar_sesion();
     obtener_datos();
     llenar_departamentos();
@@ -40,7 +41,7 @@ $(document).ready(function () {
     function llenar_direcciones() {
         funcion = "llenar_direcciones";
         $.post('../Controllers/UsuarioDistritoController.php', { funcion }, (response) => {
-            console.log(response);
+            //console.log(response);
             let direcciones = JSON.parse(response);
             let contador = 0;
             let template = '';
@@ -176,7 +177,7 @@ $(document).ready(function () {
     function verificar_sesion() {
         funcion = 'verificar_sesion';
         $.post('../Controllers/UsuarioController.php', { funcion }, (response) => {
-            console.log(response);
+            //console.log(response);
             if (response != '') {
                 let sesion = JSON.parse(response);
                 $('#nav_login').hide();
@@ -245,7 +246,20 @@ $(document).ready(function () {
     })
     $.validator.setDefaults({
         submitHandler: function () {
-            alert('todos los campos validados')
+            funcion="editar_datos";
+            let datos = new FormData($('#form-datos')[0]);
+            datos.append("funcion",funcion);
+            $.ajax({
+                type:"POST",
+                url: '../Controllers/UsuarioController.php',
+                data: datos,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function(response){
+                    console.log(response);
+                }
+            })
         }
     });
     jQuery.validator.addMethod("letras",
