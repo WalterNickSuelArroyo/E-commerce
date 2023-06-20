@@ -31,7 +31,7 @@ class Usuario
     {
         $sql = "INSERT usuario(user,pass,nombres,apellidos,dni,email,telefono,id_tipo) VALUES (:user,:pass,:nombres,:apellidos,:dni,:email,:telefono,:id_tipo)";
         $query = $this->acceso->prepare($sql);
-        $query->execute(array(':user' => $username,':pass' => $pass,':nombres' => $nombres,':apellidos' => $apellidos,':dni' => $dni,':email' => $email,':telefono' => $telefono,':id_tipo' => 2));
+        $query->execute(array(':user' => $username, ':pass' => $pass, ':nombres' => $nombres, ':apellidos' => $apellidos, ':dni' => $dni, ':email' => $email, ':telefono' => $telefono, ':id_tipo' => 2));
     }
     function obtener_datos($user)
     {
@@ -43,7 +43,7 @@ class Usuario
         $this->objetos = $query->fetchAll();
         return $this->objetos;
     }
-    function editar_datos($id_usuario, $nombres, $apellidos, $dni, $email, $telefono,$nombre)
+    function editar_datos($id_usuario, $nombres, $apellidos, $dni, $email, $telefono, $nombre)
     {
         if ($nombre != '') {
             $sql = "UPDATE usuario SET nombres=:nombres,
@@ -55,13 +55,13 @@ class Usuario
             WHERE id=:id_usuario";
             $query = $this->acceso->prepare($sql);
             $variables = array(
-            ':id_usuario'=>$id_usuario,
-            ':nombres'=>$nombres,
-            ':apellidos'=>$apellidos,
-            ':dni'=>$dni,
-            ':email'=>$email,
-            ':telefono'=>$telefono,
-            ':avatar'=>$nombre
+                ':id_usuario' => $id_usuario,
+                ':nombres' => $nombres,
+                ':apellidos' => $apellidos,
+                ':dni' => $dni,
+                ':email' => $email,
+                ':telefono' => $telefono,
+                ':avatar' => $nombre
             );
             $query->execute($variables);
         } else {
@@ -71,16 +71,36 @@ class Usuario
                                     email=:email,
                                     telefono=:telefono
                 WHERE id=:id_usuario";
+            $query = $this->acceso->prepare($sql);
+            $variables = array(
+                ':id_usuario' => $id_usuario,
+                ':nombres' => $nombres,
+                ':apellidos' => $apellidos,
+                ':dni' => $dni,
+                ':email' => $email,
+                ':telefono' => $telefono
+            );
+            $query->execute($variables);
+        }
+    }
+    function comprobar_pass($id_usuario, $pass_old)
+    {
+        $sql = "SELECT * FROM usuario
+                WHERE id=:id_usuario AND pass=:pass_old";
+        $query = $this->acceso->prepare($sql);
+        $query->execute(array(':id_usuario' => $id_usuario, ':pass_old' => $pass_old));
+        $this->objetos = $query->fetchAll();
+        return $this->objetos;
+    }
+    function cambiar_contra($id_usuario, $pass_new)
+    {
+        $sql = "UPDATE usuario SET pass=:pass_new
+                WHERE id=:id_usuario";
         $query = $this->acceso->prepare($sql);
         $variables = array(
-            ':id_usuario'=>$id_usuario,
-            ':nombres'=>$nombres,
-            ':apellidos'=>$apellidos,
-            ':dni'=>$dni,
-            ':email'=>$email,
-            ':telefono'=>$telefono
+            ':id_usuario' => $id_usuario,
+            ':pass_new' => $pass_new,
         );
         $query->execute($variables);
-        }
     }
 }

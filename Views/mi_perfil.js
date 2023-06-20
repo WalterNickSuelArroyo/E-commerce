@@ -355,7 +355,34 @@ $(document).ready(function () {
     });
     $.validator.setDefaults({
         submitHandler: function () {
-            alert('se valido todo');
+            funcion = "cambiar_contra";
+            let pass_old = $('#pass_old').val();
+            let pass_new = $('#pass_new').val();
+            $.post('../Controllers/UsuarioController.php', {funcion,pass_old,pass_new},(response)=>{
+                if (response == "success") {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Se ha cambiado su contraseña',
+                        showConfirmButton: false,
+                        timer: 1000
+                    }).then(function () {
+                        $('#form-contra').trigger('reset');
+                    })
+                } else if(response == 'error'){
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Contraseña incorrecta',
+                        text: 'Ingrese su contraseña actual para poder cambiarla',
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo conflicto al cambiar su contraseña, comuniquese con el area de sistemas',
+                    })
+                }
+            })
         }
     });
     jQuery.validator.addMethod("letras",
