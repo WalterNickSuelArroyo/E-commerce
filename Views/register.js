@@ -65,7 +65,8 @@ $(document).ready(function () {
 
     jQuery.validator.addMethod("letras",
         function (value, element) {
-            return /^[A-Za-z]+$/.test(value);
+            let variable = value.replace(/ /g, "");
+            return /^[A-Za-z]+$/.test(variable);
         }
         , "Este campo solo permite letras");
     $('#form-register').validate({

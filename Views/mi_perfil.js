@@ -353,4 +353,62 @@ $(document).ready(function () {
             $(element).addClass('is-valid');
         }
     });
+    $.validator.setDefaults({
+        submitHandler: function () {
+            alert('se valido todo');
+        }
+    });
+    jQuery.validator.addMethod("letras",
+        function (value, element) {
+            let variable = value.replace(/ /g, "");
+            return /^[A-Za-z]+$/.test(variable);
+        }
+        , "Este campo solo permite letras");
+    $('#form-contra').validate({
+        rules: {
+            pass_old: {
+                required: true,
+                minlength: 8,
+                maxlength: 20,
+            },
+            pass_new: {
+                required: true,
+                minlength: 8,
+                maxlength: 20,
+            },
+            pass_repeat: {
+                required: true,
+                equalTo: "#pass_new"
+            }
+        },
+        messages: {
+            pass_old: {
+                required: "Por favor, ingrese su contraseña",
+                minlength: "Tu contraseña debe tener al menos 8 caracteres",
+                maxlength: "Tu contraseña debe tener menos de 20 caracteres"
+            },
+            pass_new: {
+                required: "Por favor, ingrese su contraseña",
+                minlength: "Tu contraseña debe tener al menos 8 caracteres",
+                maxlength: "Tu contraseña debe tener menos de 20 caracteres"
+            },
+            pass_repeat: {
+                required: "Por favor, vuelva a ingresar su contraseña",
+                equalTo: "Las contraseñas no coinciden"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+            $(element).removeClass('is-valid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+            $(element).addClass('is-valid');
+        }
+    });
 })
