@@ -1,19 +1,22 @@
 <?php
 include_once '../Models/Usuario.php';
+include_once '../Util/Config/config.php';
 $usuario = new Usuario();
 session_start();
 if ($_POST['funcion'] == 'login') {
     $user = $_POST['user'];
     $pass = $_POST['pass'];
-    $usuario->loguearse($user, $pass);
+    $usuario->verificar_usuario($user);
+    //echo $usuario->objetos[0]->pass;
     if ($usuario->objetos != null) {
-        foreach ($usuario->objetos as $objeto) {
-            $_SESSION['id'] = $objeto->id;
-            $_SESSION['user'] = $objeto->user;
-            $_SESSION['tipo_usuario'] = $objeto->id_tipo;
-            $_SESSION['avatar'] = $objeto->avatar;
+        $pass_bd = openssl_decrypt($usuario->objetos[0]->pass, CODE, KEY);
+        if ($pass_bd == $pass) {
+            $_SESSION['id'] = $usuario->objetos[0]->id;
+            $_SESSION['user'] = $usuario->objetos[0]->user;
+            $_SESSION['tipo_usuario'] = $usuario->objetos[0]->id_tipo;
+            $_SESSION['avatar'] = $usuario->objetos[0]->avatar;
+            echo 'logueado';
         }
-        echo 'logueado';
     }
 }
 if ($_POST['funcion'] == 'verificar_sesion') {
@@ -39,7 +42,7 @@ if ($_POST['funcion'] == 'verificar_usuario') {
 }
 if ($_POST['funcion'] == 'registrar_usuario') {
     $username = $_POST['username'];
-    $pass = $_POST['pass'];
+    $pass = openssl_encrypt($_POST['pass'], CODE, KEY);
     $nombres = $_POST['nombres'];
     $apellidos = $_POST['apellidos'];
     $dni = $_POST['dni'];
@@ -75,34 +78,41 @@ if ($_POST['funcion'] == 'editar_datos') {
     $telefono = $_POST['telefono_mod'];
     $avatar = $_FILES['avatar_mod']['name'];
     if ($avatar != '') {
-        $nombre = uniqid().'-'.$avatar;
-        $ruta = '../Util/Img/Users/'.$nombre;
-        move_uploaded_file($_FILES['avatar_mod']['tmp_name'],$ruta);
+        $nombre = uniqid() . '-' . $avatar;
+        $ruta = '../Util/Img/Users/' . $nombre;
+        move_uploaded_file($_FILES['avatar_mod']['tmp_name'], $ruta);
         $usuario->obtener_datos($id_usuario);
         foreach ($usuario->objetos as $objeto) {
-            $avatar_actual=$objeto->avatar;
+            $avatar_actual = $objeto->avatar;
             if ($avatar_actual != 'user_default.png') {
-                unlink('../Util/Img/Users/'.$avatar_actual);
+                unlink('../Util/Img/Users/' . $avatar_actual);
             }
         }
-        $_SESSION['avatar']=$nombre;
+        $_SESSION['avatar'] = $nombre;
     } else {
-        $nombre='';
+        $nombre = '';
     }
-    
-    $usuario->editar_datos($id_usuario, $nombres, $apellidos, $dni, $email, $telefono,$nombre);
+
+    $usuario->editar_datos($id_usuario, $nombres, $apellidos, $dni, $email, $telefono, $nombre);
     echo 'success';
 }
 if ($_POST['funcion'] == 'cambiar_contra') {
     $id_usuario = $_SESSION['id'];
+    $user = $_SESSION['user'];
     $pass_old = $_POST['pass_old'];
     $pass_new = $_POST['pass_new'];
-    $usuario->comprobar_pass($id_usuario, $pass_old);
-    if(!empty($usuario->objetos)) {
-        $usuario->cambiar_contra($id_usuario,$pass_new);
-        echo 'success';
+    $usuario->verificar_usuario($user);
+    if (!empty($usuario->objetos)) {
+        $pass_bd = openssl_decrypt($usuario->objetos[0]->pass, CODE, KEY);
+        if ($pass_bd == $pass_old) {
+            $pass_new_encriptada = openssl_encrypt($pass_new,CODE,KEY);
+            $usuario->cambiar_contra($id_usuario, $pass_new_encriptada);
+            echo 'success';
+        }
+        else {
+            echo 'error';
+        }
     } else {
         echo 'error';
     }
-    
 }
