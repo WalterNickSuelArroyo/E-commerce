@@ -5,6 +5,7 @@ $(document).ready(function () {
     obtener_datos();
     llenar_departamentos();
     llenar_direcciones();
+    llenar_historial();
     $('#departamento').select2({
         placeholder: 'Seleccione un departamento',
         language: {
@@ -38,6 +39,12 @@ $(document).ready(function () {
             }
         }
     });
+    function llenar_historial() {
+        funcion = "llenar_historial";
+        $.post('../Controllers/HistorialController.php',{funcion},(response)=>{
+            console.log(response);
+        })
+    }
     function llenar_direcciones() {
         funcion = "llenar_direcciones";
         $.post('../Controllers/UsuarioDistritoController.php', { funcion }, (response) => {
