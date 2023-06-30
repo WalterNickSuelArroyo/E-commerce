@@ -42,7 +42,11 @@ $(document).ready(function () {
     function llenar_historial() {
         funcion = "llenar_historial";
         $.post('../Controllers/HistorialController.php',{funcion},(response)=>{
-            console.log(response);
+            let historiales = JSON.parse(response);
+            //console.log(historiales);
+            historiales.forEach(historial=>{
+                console.log(historial);
+            });
         })
     }
     function llenar_direcciones() {
